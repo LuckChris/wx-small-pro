@@ -2,30 +2,45 @@
 <view class="bg-img"></view>
 
 <!-- 内容部分 -->
-<view class="container">
-  <!-- 用户信息 -->
-  <view class="user-info">
-    <view class="avatar-img">
-      <open-data type="userAvatarUrl"></open-data>
+<view class="container-wrapper">
+  
+    <!-- 用户信息 -->
+    <view class="user-info">
+      <view class="avatar-img">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view class="greet">
+        <text class="userinfo-greet">下午好,</text>
+        <open-data type="userNickName"></open-data>
+      </view>
     </view>
-    <view class="greet">
-      <text class="userinfo-greet">下午好,</text>
-      <open-data type="userNickName"></open-data>
+  <view class="container">
+    <!-- 定位天气 -->
+    <view class="weather-message">
+      <view class="address-info">
+        <text class="address">深圳市</text>
+        <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
+      </view>
+    <view class="temperatrue-info">
+        <text class="temp-num">12</text>
+        <text>℃</text>
     </view>
+    <view class="weather-status">
+      <image class="status-icon" src='{{imgUrl}}' ></image>
+      <text class="status-text">多云</text>
+    </view>
+    <viwe class="weather-desc">
+      <view class="weather-left">
+        <text class="desc-detail">东北风3级</text>
+        <text class="desc-detail">湿度88</text>
+      </view>
+      <view class="weather-right">
+          <text class="desc-detail">大气压1016</text>
+          <text class="desc-detail">降水量0.0</text>
+      </view>   
+    </viwe>
   </view>
-  <!-- 定位天气 -->
-  <view class="wether-message">
-    <view class="address-info">
-      <text class="address">深圳市</text>
-      <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
-    </view>
-   <view class="temperatrue-info">
-      <text class="temp-num">12</text>
-      <text>℃</text>
-   </view>
    
-    <text class="wether-status">多云</text>
-
   </view>
  
 </view>
