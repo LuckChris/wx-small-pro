@@ -1,0 +1,31 @@
+<!-- 背景 -->
+<view class="bg-img"></view>
+
+<!-- 内容部分 -->
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-info">
+    <view class="avatar-img">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <view class="greet">
+      <text class="userinfo-greet">下午好,</text>
+      <open-data type="userNickName"></open-data>
+    </view>
+  </view>
+  <!-- 定位天气 -->
+  <view class="wether-message">
+    <view class="address-info">
+      <text class="address">深圳市</text>
+      <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
+    </view>
+   <view class="temperatrue-info">
+      <text class="temp-num">12</text>
+      <text>℃</text>
+   </view>
+   
+    <text class="wether-status">多云</text>
+
+  </view>
+ 
+</view>

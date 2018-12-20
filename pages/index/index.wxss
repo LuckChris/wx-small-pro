@@ -1,0 +1,50 @@
+.bg-img{
+    width: 100%;
+    /* height: 100rpx; */
+    background-color: pink;
+}
+.container{
+    background-color: lightcyan;
+   
+}
+.user-info{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30rpx;
+}
+.avatar-img{
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.greet{
+    font-size: 28rpx;
+    /* color: #fff; */
+    padding-left: 20rpx;
+}
+/* 天气信息 */
+.wether-message{
+}
+.address-info{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 40rpx;
+}
+.address-icon{
+    width: 50rpx;
+    height: 50rpx;
+}
+.temperatrue-info{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+.temp-num{
+    font-size: 100rpx;
+}
+
