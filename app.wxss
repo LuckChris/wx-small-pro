@@ -1,0 +1,9 @@
+page{
+    background: #f6f6f6;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+::-webkit-scrollbar {
+    display: none;
+  }

@@ -1,10 +1,10 @@
-<!-- 背景 -->
-<view class="bg-img"></view>
+  <!-- 背景 -->
+  <view class="bg-img"></view>
 
-<!-- 内容部分 -->
+  <!-- 内容部分 -->
 <view class="container-wrapper">
-  
-    <!-- 用户信息 -->
+    
+      <!-- 用户信息 -->
     <view class="user-info">
       <view class="avatar-img">
         <open-data type="userAvatarUrl"></open-data>
@@ -14,33 +14,100 @@
         <open-data type="userNickName"></open-data>
       </view>
     </view>
-  <view class="container">
-    <!-- 定位天气 -->
-    <view class="weather-message">
-      <view class="address-info">
-        <text class="address">深圳市</text>
-        <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
-      </view>
-    <view class="temperatrue-info">
+    <view class="container">
+      <!-- 定位天气 -->
+      <view class="weather-message">
+        <view class="address-info">
+          <text class="address">深圳市</text>
+          <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
+        </view>
+      </view>  
+      <view class="temperatrue-info">
         <text class="temp-num">12</text>
         <text>℃</text>
-    </view>
-    <view class="weather-status">
-      <image class="status-icon" src='{{imgUrl}}' ></image>
-      <text class="status-text">多云</text>
-    </view>
-    <viwe class="weather-desc">
-      <view class="weather-left">
-        <text class="desc-detail">东北风3级</text>
-        <text class="desc-detail">湿度88</text>
       </view>
-      <view class="weather-right">
-          <text class="desc-detail">大气压1016</text>
-          <text class="desc-detail">降水量0.0</text>
-      </view>   
-    </viwe>
+      <view class="weather-status">
+        <image class="status-icon" src='{{imgUrl}}' ></image>
+        <text class="status-text">多云</text>
+      </view>
+      <viwe class="weather-desc">
+        <view class="weather-left">
+          <text class="desc-detail">东北风3级</text>
+          <text class="desc-detail">湿度88</text>
+        </view>
+        <view class="weather-right">
+            <text class="desc-detail">大气压1016</text>
+            <text class="desc-detail">降水量0.0</text>
+        </view>   
+      </viwe>
+    </view>
+  
+  <view class="update-time">
+    <view class="time">更新于12月21日 10:20</view>
   </view>
-   
+  <!-- 逐三小时天气 -->
+  <view class="three-hours-container">
+    <text class="three-hours-title">逐三小时预报</text>
+    <swiper class="hours-list" indicator-dots="{{indicatorDots}}">
+      <block>
+        <swiper-item class="hours-swiper-item">
+          <block  wx:for="{{trip}}">
+            <view class="hours-item">
+              <view> 13:00</view>
+              <view>多云</view>
+              <view>
+                <image class="status-icon" src='{{imgUrl}}' ></image>
+              </view>
+              <view>20℃</view>
+              <view> 东北风</view>
+              <view> 风速1-2级</view>
+            </view>
+          </block>
+        </swiper-item>
+       </block>
+    </swiper>
   </view>
- 
+  <!-- 近三天预报 -->
+  <view class="thress-days-contanier">
+    <text class="three-days-title">近三天预报</text>
+    <view class="days-content">
+      <view  wx:for="{{trips}}" wx:for-item="item" class="days-item">
+        <view class="days">{{item}}</view>
+        <view class="days-num"> 12/20</view>
+        <view>多云</view>
+        <view>
+          <image class="status-icon" src='{{imgUrl}}' ></image>
+        </view>
+        <view>
+          <text>26℃</text> ~
+          <text>27℃</text>
+        </view>
+        <view>
+          <image class="status-icon" src='{{imgUrl}}' ></image>
+        </view>
+        <view>多云</view>
+        <view>无持续风向</view>
+        <view>风力1~2级</view>
+      </view>
+    </view>
+  </view>
+  <!-- 生活指数 -->
+  <view class="life-number-container">
+    <text class="life-title">生活指数</text>
+    <view class="life-container" wx:for="{{lifeList}}">
+      <view class="life-left">
+        <image class="status-icon" src='{{imgUrl}}' ></image>
+      </view>
+      <view class="life-right">
+        <view>舒适度指数：较舒适</view>
+        <view>白天天气晴好，您在这种天气条件下，会感觉早晚凉爽，舒适，午后偏热</view>
+      </view>
+    </view>
+  </view>
+  <!-- copy -->
+  <view class="copy-right">
+    <text>学习路上仿照别人写的一个小程序,</text>
+    <text>thank you wuwhs</text>
+  </view>
+
 </view>
