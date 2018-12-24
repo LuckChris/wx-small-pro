@@ -3,7 +3,7 @@ const config = require('../utils/config')
 const QQMapWX = require('../lib/qqmap-wx-jssdk.min.js')
 
 // 腾讯地图创建
-const QQMapWX = new QQMapWX({
+const QQMap = new QQMapWX({
     key:config.qqMapkey
 })
 
@@ -37,7 +37,7 @@ const getLocation =() => {
             method:'GET',
             data:{
                 ...commonParam,
-                ...data
+                ...option
             },
             success(res) {
                 resolve(res.data)
@@ -52,5 +52,4 @@ const getLocation =() => {
 module.exports = {
     getLocation,
     getNowWeather
-
 }

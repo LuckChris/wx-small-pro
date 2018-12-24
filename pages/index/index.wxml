@@ -10,7 +10,7 @@
         <open-data type="userAvatarUrl"></open-data>
       </view>
       <view class="greet">
-        <text class="userinfo-greet">下午好,</text>
+        <text class="userinfo-greet">{{greets}},</text>
         <open-data type="userNickName"></open-data>
       </view>
     </view>
@@ -18,32 +18,32 @@
       <!-- 定位天气 -->
       <view class="weather-message">
         <view class="address-info">
-          <text class="address">深圳市</text>
+          <text class="address">{{currentCity}}</text>
           <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
         </view>
       </view>  
       <view class="temperatrue-info">
-        <text class="temp-num">12</text>
+        <text class="temp-num">{{nowData.fl}}</text>
         <text>℃</text>
       </view>
       <view class="weather-status">
         <image class="status-icon" src='{{imgUrl}}' ></image>
-        <text class="status-text">多云</text>
+        <text class="status-text">{{nowData.cond_txt}}</text>
       </view>
       <viwe class="weather-desc">
         <view class="weather-left">
-          <text class="desc-detail">东北风3级</text>
-          <text class="desc-detail">湿度88</text>
+          <text class="desc-detail">{{nowData.wind_dir}}{{nowData.wind_sc}}级</text>
+          <text class="desc-detail">湿度{{nowData.hum}}</text>
         </view>
         <view class="weather-right">
-            <text class="desc-detail">大气压1016</text>
-            <text class="desc-detail">降水量0.0</text>
+            <text class="desc-detail">大气压{{nowData.pres}}</text>
+            <text class="desc-detail">降水量{{nowData.pcpn}}</text>
         </view>   
       </viwe>
     </view>
   
   <view class="update-time">
-    <view class="time">更新于12月21日 10:20</view>
+    <view class="time">更新于{{upDataTime}}</view>
   </view>
   <!-- 逐三小时天气 -->
   <view class="three-hours-container">
