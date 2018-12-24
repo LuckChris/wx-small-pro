@@ -12,11 +12,13 @@ Page({
         greets:'' ,
         nowData:'',
         upDataTime:'',
-        currentCity:''     
+        currentCity:'',
+        hourlyInfo:''     
     },
     onShow() {
         this.init()
-        this.getNowWeatherHandler()
+        this.initWeather()
+       
     },
     //初始化
     init() {
@@ -28,6 +30,12 @@ Page({
         this.setData({
             greets:util.getGreetings()
         })       
+    },
+    // 初始化天气
+    initWeather() {
+      this.getNowWeatherHandler()
+      this.getHoulyInfo()
+
     },
     getNowWeatherHandler() {
         return new Promise((resolve,reject) => {
@@ -43,6 +51,21 @@ Page({
             })
         })
         
+    },
+    getHoulyInfo() {
+      return new Promise((resolve,reject) => {
+        api.getThreeHoursWeather({
+          location : '深圳'
+        }).then((res)=> {
+          console.log(res)
+          let data = res.HeWeather6[0]
+          console.log(JSON.stringify(data))
+          // this.setData({
+          //   hourlyInfo:data.hourly
+          // })
+
+        })
+      })
     }
 })
 

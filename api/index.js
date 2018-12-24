@@ -49,7 +49,29 @@ const getLocation =() => {
      })
 
 }
+
+// 逐三小时天气
+const getThreeHoursWeather=(option)=>{
+  return new Promise((resolve,reject) => {
+    wx.request({
+      url:config.hourlyWeatherUrl,
+      method:'GET',
+      data:{
+        ...commonParam,
+        ...option
+      },
+      success(res) {
+        resolve(res.data)
+      },
+      fail(err) {
+        reject(err)
+      }
+    })
+
+  })
+}
 module.exports = {
     getLocation,
-    getNowWeather
+    getNowWeather,
+    getThreeHoursWeather
 }

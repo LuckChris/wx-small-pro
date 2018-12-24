@@ -10,6 +10,9 @@ module.exports = {
     //实时天气接口
     nowWeatherUrl:`${HEWEATHER_API}/now`,
 
+    // 逐三小时天气
+    hourlyWeatherUrl:`${HEWEATHER_API}/hourly`,
+
     // 天气图标基地址
     COND_ICON_BASE_URL :'https://6465-demo-57510e-1257978613.tcb.qcloud.la/miniWeather/images/cond-white',
 
