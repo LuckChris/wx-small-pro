@@ -50,11 +50,11 @@ const getLocation =() => {
 
 }
 
-// 逐三小时天气
-const getThreeHoursWeather=(option)=>{
+// 空气质量实况
+const getNowAir=(option)=>{
   return new Promise((resolve,reject) => {
     wx.request({
-      url:config.hourlyWeatherUrl,
+      url:config.nowAirUrl,
       method:'GET',
       data:{
         ...commonParam,
@@ -113,7 +113,7 @@ const getFutureWeather =(option) => {
 module.exports = {
     getLocation,
     getNowWeather,
-    getThreeHoursWeather,
+    getNowAir,
     getLifeStyleWeather,
     getFutureWeather
 }

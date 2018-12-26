@@ -17,7 +17,7 @@
     <view class="container">
       <!-- 定位天气 -->
       <view class="weather-message">
-        <view class="address-info">
+        <view class="address-info" bindTap="toToLocation">
           <text class="address">{{currentCity}}</text>
           <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
         </view>
@@ -45,11 +45,11 @@
   <view class="update-time">
     <view class="time">更新于{{upDataTime}}</view>
   </view>
-  <!-- 逐三小时天气 -->
+  <!-- 空气质量实况 -->
   <view class="three-hours-container">
-    <text class="three-hours-title">逐三小时预报</text>
-    <swiper class="hours-list" indicator-dots="{{indicatorDots}}">
-      <block>
+    <text class="three-hours-title">附近站点空气质量实况</text>
+    <swiper class="hours-list" indicator-dots="{{indicatorDots}}"  indicator-active-color="{{indicatorActiveColor}}">
+      <block wx:for="{{swiperList}}">
         <swiper-item class="hours-swiper-item">
           <block  wx:for="{{trip}}">
             <view class="hours-item">
@@ -72,22 +72,22 @@
     <text class="three-days-title">近三天预报</text>
     <view class="days-content">
       <view  wx:for="{{futureList}}" wx:for-item="item" class="days-item" wx:key="{{index}}">
-        <view class="days">{{item}}</view>
-        <view class="days-num"> 12/20</view>
-        <view>多云</view>
+        <view class="days">{{item.day_name}}</view>
+        <view class="days-num">{{item.date}}</view>
+        <view>{{item.cond_txt_d}}</view>
         <view>
           <image class="status-icon" src='{{imgUrl}}' ></image>
         </view>
         <view>
-          <text>26℃</text> ~
-          <text>27℃</text>
+          <text>{{item.tmp_min}}℃</text> ~
+          <text>{{item.tmp_max}}℃</text>
         </view>
         <view>
           <image class="status-icon" src='{{imgUrl}}' ></image>
         </view>
-        <view>多云</view>
-        <view>无持续风向</view>
-        <view>风力1~2级</view>
+        <view>{{item.cond_txt_n}}</view>
+        <view>{{item.wind_dri}}</view>
+        <view>风速{{item.wind_sc}}级</view>
       </view>
     </view>
   </view>

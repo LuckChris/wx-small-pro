@@ -1,6 +1,7 @@
 
 const LIFESTYLE_BASE_URL = 'https://6465-demo-57510e-1257978613.tcb.qcloud.la/miniWeather/images/lifestyle'
 const HEWEATHER_API = 'https://free-api.heweather.net/s6/weather'
+const AIR_API = 'https://free-api.heweather.net/s6/air'
 
 module.exports = {
     // 和风天气开发key
@@ -10,8 +11,8 @@ module.exports = {
     //实时天气接口
     nowWeatherUrl:`${HEWEATHER_API}/now`,
 
-    // 逐三小时天气
-    hourlyWeatherUrl:`${HEWEATHER_API}/hourly`,
+    // 空气质量状况
+    nowAirUrl:`${AIR_API}/now`,
 
     // 生活指数
     lifestyleUrl:`${HEWEATHER_API}/lifestyle`,

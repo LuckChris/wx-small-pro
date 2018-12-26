@@ -1,0 +1,23 @@
+<view class='search-container'>
+<!-- 头部搜索 -->
+    <view class="search-input">
+        <input placeholder="请输入城市关键字搜索" />
+        <text class="cancel">取消</text>       
+    </view>
+    <view class="guess-find">
+        <text>#猜你想找</text>
+    </view>
+    <view class="guess-city">
+        <button size="mini" type="primary" plain="true"  wx:for="{{filterName}}">{{item}}</button>
+    </view>
+    <view class="all-city-list" wx:for="{{filterName}}">
+        <view class="letter">A</view>
+        <view class="city" wx:for="{{filterName}}">
+            <view>深圳市</view>
+        </view>
+    </view>
+    <view class="letter-gudience">
+        <text>#</text>
+        <text wx:for="{{filterName}}">A</text>
+    </view>
+</view>

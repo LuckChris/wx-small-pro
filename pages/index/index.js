@@ -8,20 +8,28 @@ Page({
     data: {
         imgUrl: "../image/location_s_w.png" ,
         trip:[1,2,3,4],
-        trips:['今天','明天','后天'],
-        lifeList:[1,2,3,4,5,6,7,8,9,12,13,43,56,77]  ,
         greets:'' ,
         nowData:'',
         upDataTime:'',
         currentCity:'',
-        hourlyInfo:''  ,
+        airStationList:''  ,
         lifeStyleList:'' ,
-        futureList:[]  
+        futureList:[],
+        swiperList:'',
+        indicatorDots:true,
+        indicatorActiveColor:'white',
+        airInfoList:[]  
     },
     onShow() {
         this.init()
         this.initWeather()
        
+    },
+    toToLocation() {
+        wx.navigateTo({
+            url:'pages/search/search'
+        })
+
     },
     //初始化
     init() {
@@ -37,7 +45,7 @@ Page({
     // 初始化天气
     initWeather() {
       this.getNowWeatherHandler()
-      this.getHoulyInfo()
+      this.getNowAirInfo()
       this.getlifeStyleInfo()
       this.getFutureInfo()
 
@@ -59,22 +67,39 @@ Page({
         })
         
     },
-    getHoulyInfo() {
+    getNowAirInfo() {
       return new Promise((resolve,reject) => {
-        api.getThreeHoursWeather({
+        api.getNowAir({
           location : '深圳'
         }).then((res)=> {
-          console.log(res)
-          let data = res.HeWeather6[0]
-          console.log(JSON.stringify(data))
-          // this.setData({
-          //   hourlyInfo:data.hourly
-          // })
+            let data = res.HeWeather6[0].air_now_station
+            this.airDataFormat(data) 
+        resolve()
 
         }).catch((err) => {
             reject(err)
         })
       })
+    },
+    airDataFormat(data) {
+        // let swiperTrip = Math.ceil(data.length / 4)
+        // console.log(swiperTrip)
+        // let grap = 4
+        // let list=[]
+        // swiperTrip.forEach((item,i)=>{
+        //     list.push(data.slice(i*grap , (i+1)*grap))
+        //     return list
+        // })
+        // for(let i=0;i<swiperTrip;i++) {
+        //   list.push(data.slice(i*grap , (i+1)*grap))
+        // }   
+        // console.log(list) 
+        // this.setData({
+        //   airStationList:list,
+        //   swiperList:swiperTrip
+        // })
+
+
     },
     getlifeStyleInfo() {
         return new Promise((resolve,reject) => {
@@ -84,9 +109,6 @@ Page({
                 let data = res.HeWeather6[0].lifestyle
                 this.formatLifeStyle(data)
                 resolve()
-                // this.setData({
-                //     lifeStyleList:data.lifestyle
-                // })
             }).catch((err) => {
                 reject(err)
             })
@@ -117,10 +139,6 @@ Page({
             }).then((res) => {
                 let data = res.HeWeather6[0].daily_forecast
                 this.fatureFormat(data)
-                // console.log(res +'数据')
-                // this.setData({
-                //     futureList:data.daily_forecast
-                // })
                 resolve()
             }).catch((err) => {
                 reject(err)
@@ -129,13 +147,15 @@ Page({
     },
     fatureFormat(data) {
         let days = ['今天','明天','后天']
-        let futureList = data.reduce((prev,next) => {
-            prev.push({
-               data:next.data.slice()
-
-            })
+        console.log(data)
+        data.forEach((item,index) => {
+            item['day_name'] = days[index]
+            item['date']= item.date.slice(5).replace('-','/')
+            return data
         })
-
+        this.setData({
+            futureList:data
+        })
     }
 
 })
