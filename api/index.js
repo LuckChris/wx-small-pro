@@ -70,8 +70,50 @@ const getThreeHoursWeather=(option)=>{
 
   })
 }
+// 生活指数
+const getLifeStyleWeather =(option) => {
+    return new Promise((resolve,reject) => {
+        wx.request({
+            url:config.lifestyleUrl,
+            method:'GET',
+            data:{
+                ...commonParam,
+                ...option
+            },
+            success(res) {
+                resolve(res.data)
+            },
+            fail(err) {
+                reject(err)
+            }
+
+        })
+    })
+}
+
+// 未来三天
+const getFutureWeather =(option) => {
+    return new Promise((resolve,reject) => {
+        wx.request({
+            url:config.forecastUrl,
+            method:'GET',
+            data:{
+                ...commonParam,
+                ...option
+            },
+            success(res) {
+                resolve(res.data)
+            },
+            fail(err) {
+                reject(err)
+            }
+        })
+    })
+}
 module.exports = {
     getLocation,
     getNowWeather,
-    getThreeHoursWeather
+    getThreeHoursWeather,
+    getLifeStyleWeather,
+    getFutureWeather
 }

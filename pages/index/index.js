@@ -2,6 +2,7 @@
  const app =getApp()
  const api = app.globalData.api
  const util = app.globalData.utils
+ const config = app.globalData.config
 
 Page({
     data: {
@@ -13,7 +14,9 @@ Page({
         nowData:'',
         upDataTime:'',
         currentCity:'',
-        hourlyInfo:''     
+        hourlyInfo:''  ,
+        lifeStyleList:'' ,
+        futureList:[]  
     },
     onShow() {
         this.init()
@@ -35,6 +38,8 @@ Page({
     initWeather() {
       this.getNowWeatherHandler()
       this.getHoulyInfo()
+      this.getlifeStyleInfo()
+      this.getFutureInfo()
 
     },
     getNowWeatherHandler() {
@@ -48,6 +53,8 @@ Page({
                     nowData : data.now,
                     upDataTime:data.update.loc.slice(5).replace(/-/, '/')
                 })    
+            }).catch((err) => {
+                reject(err)
             })
         })
         
@@ -64,8 +71,72 @@ Page({
           //   hourlyInfo:data.hourly
           // })
 
+        }).catch((err) => {
+            reject(err)
         })
       })
+    },
+    getlifeStyleInfo() {
+        return new Promise((resolve,reject) => {
+            api.getLifeStyleWeather({
+                location : '深圳'               
+            }).then((res) => {
+                let data = res.HeWeather6[0].lifestyle
+                this.formatLifeStyle(data)
+                resolve()
+                // this.setData({
+                //     lifeStyleList:data.lifestyle
+                // })
+            }).catch((err) => {
+                reject(err)
+            })
+        })
+    },
+
+    // 格式数据
+    formatLifeStyle(data) {
+        const lifeIcon = config.lifestyleImgList
+        let lifestyle = data.reduce((prev,next) => {
+            prev.push({
+                brf:next.brf,
+                txt:next.txt,
+                iconTxt:lifeIcon[next.type].txt,
+                iconUrl:lifeIcon[next.type].src
+            })
+            return prev
+        },[])
+        this.setData({
+            lifeStyleList:lifestyle
+        })
+
+    },
+    getFutureInfo() {
+        return new Promise((resolve,reject) => {
+            api.getFutureWeather({
+                location:'深圳'
+            }).then((res) => {
+                let data = res.HeWeather6[0].daily_forecast
+                this.fatureFormat(data)
+                // console.log(res +'数据')
+                // this.setData({
+                //     futureList:data.daily_forecast
+                // })
+                resolve()
+            }).catch((err) => {
+                reject(err)
+            })
+        })
+    },
+    fatureFormat(data) {
+        let days = ['今天','明天','后天']
+        let futureList = data.reduce((prev,next) => {
+            prev.push({
+               data:next.data.slice()
+
+            })
+        })
+
     }
+
 })
 

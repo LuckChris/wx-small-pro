@@ -13,6 +13,13 @@ module.exports = {
     // 逐三小时天气
     hourlyWeatherUrl:`${HEWEATHER_API}/hourly`,
 
+    // 生活指数
+    lifestyleUrl:`${HEWEATHER_API}/lifestyle`,
+
+    // 未来三天天气
+    forecastUrl:`${HEWEATHER_API}/forecast`,
+
+
     // 天气图标基地址
     COND_ICON_BASE_URL :'https://6465-demo-57510e-1257978613.tcb.qcloud.la/miniWeather/images/cond-white',
 
@@ -101,6 +108,42 @@ module.exports = {
           color: '#6b7e8c'
         }
       ],
+
+  // 生活指数
+  lifestyleImgList: {
+    comf: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_comf.png`,
+      txt: '舒适度指数'
+    },
+    drsg: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_drsg.png`,
+      txt: '穿衣指数'
+    },
+    flu: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_flu.png`,
+      txt: '感冒指数'
+    },
+    sport: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_sport.png`,
+      txt: '运动指数'
+    },
+    trav: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_trav.png`,
+      txt: '旅游指数'
+    },
+    uv: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_uv.png`,
+      txt: '紫外线指数'
+    },
+    cw: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_cw.png`,
+      txt: '洗车指数'
+    },
+    air: {
+      src: `${LIFESTYLE_BASE_URL}/lifestyle_air.png`,
+      txt: '晾晒指数'
+    }
+  },
 
     
 

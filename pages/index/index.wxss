@@ -153,6 +153,7 @@
 }
 .life-number-container{
     border-bottom: 1rpx solid #ccc;
+    padding: 0 10rpx;
 }
 .copy-right{
     display: flex;

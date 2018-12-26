@@ -71,7 +71,7 @@
   <view class="thress-days-contanier">
     <text class="three-days-title">近三天预报</text>
     <view class="days-content">
-      <view  wx:for="{{trips}}" wx:for-item="item" class="days-item">
+      <view  wx:for="{{futureList}}" wx:for-item="item" class="days-item" wx:key="{{index}}">
         <view class="days">{{item}}</view>
         <view class="days-num"> 12/20</view>
         <view>多云</view>
@@ -94,13 +94,13 @@
   <!-- 生活指数 -->
   <view class="life-number-container">
     <text class="life-title">生活指数</text>
-    <view class="life-container" wx:for="{{lifeList}}">
+    <view class="life-container" wx:for="{{lifeStyleList}}" wx:for-item="item" wx:key="item.type">
       <view class="life-left">
-        <image class="status-icon" src='{{imgUrl}}' ></image>
+        <image class="status-icon" src='{{item.iconUrl}}' ></image>
       </view>
       <view class="life-right">
-        <view>舒适度指数：较舒适</view>
-        <view>白天天气晴好，您在这种天气条件下，会感觉早晚凉爽，舒适，午后偏热</view>
+        <view>{{item.iconTxt}} : {{item.brf}}</view>
+        <view>{{item.txt}}</view>
       </view>
     </view>
   </view>
