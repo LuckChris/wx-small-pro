@@ -3,6 +3,10 @@
  const api = app.globalData.api
  const util = app.globalData.utils
  const config = app.globalData.config
+ const BG_IMG_BASE_URL = config. BG_IMG_BASE_URL
+ const BASE_ICON = config.COND_ICON_BASE_URL
+
+ const regeneratorRuntime = require('../../lib/regenerator') // 为了使用async await
 
 Page({
     data: {
@@ -18,12 +22,15 @@ Page({
         swiperList:'',
         indicatorDots:true,
         indicatorActiveColor:'white',
-        airInfoList:[]  
+        airInfoList:[],
+        bgImgUrl:BG_IMG_BASE_URL +'/calm.jpg',  // 背景图片
+        iconUrl:`${BASE_ICON}/999.png`,
+        location:'',
+        lat:'',
+        lon:''
     },
     onShow() {
-        this.init()
-        this.initWeather()
-       
+        this.init()     
     },
     toToLocation() {
         wx.navigateTo({
@@ -32,8 +39,10 @@ Page({
 
     },
     //初始化
-    init() {
-        this.initGreetings()
+   async init() {
+        await this.initGreetings()
+        await this.getLcationCity()
+        await this.initWeather()     
     },
 
     // 初始化问候语
@@ -50,17 +59,60 @@ Page({
       this.getFutureInfo()
 
     },
+    initBgImg(code) {
+        let cur = config.bgImgList.find((item) => {
+            return item.codes.includes(code)
+
+        })
+        let url = BG_IMG_BASE_URL + (cur ? `/${cur.name}` : `/calm`) + '.jpg'
+        this.setData({
+            bgImgUrl:url
+        })
+    },
+   async getLcationCity() {
+       try {
+        let {latitude,longitude} = await api.getLocation()
+            this.setData({
+                lat:latitude,
+                lon:longitude
+            })
+            this.getCity({
+                latitude,
+                longitude
+            })               
+       } catch (error) {
+           console.log(error)           
+       }
+    },
+  async  getCity(option) {
+      try {
+           let res = await api.getCityByLon(option)
+           this.setData({
+               location:res.ad_info.city
+           })         
+      } catch (error) {
+          console.log(error)          
+      }
+    },
     getNowWeatherHandler() {
+        console.log(this.data.location + '城市')
         return new Promise((resolve,reject) => {
             api.getNowWeather({
-                location : '深圳'
+                location :this.data.location 
             }).then((res) => {
-                let data = res.HeWeather6[0]    
-                this.setData({
-                    currentCity:data.basic.location,
-                    nowData : data.now,
-                    upDataTime:data.update.loc.slice(5).replace(/-/, '/')
-                })    
+                let data = res.HeWeather6[0] 
+                if(data) {
+                    // let code = data.now.cond_code || '101'
+                    let code = 101
+                    this.initBgImg(code)  
+                }            
+                // this.setData({
+                //     currentCity:data.basic.location,
+                //     nowData : data.now,
+                //     upDataTime:data.update.loc.slice(5).replace(/-/, '/'),
+                //     iconUrl :`${BASE_ICON}/${data.now.cond_code}.png`
+                // })   
+                resolve() 
             }).catch((err) => {
                 reject(err)
             })
@@ -70,7 +122,7 @@ Page({
     getNowAirInfo() {
       return new Promise((resolve,reject) => {
         api.getNowAir({
-          location : '深圳'
+          location : '昆明'
         }).then((res)=> {
             let data = res.HeWeather6[0].air_now_station
             this.airDataFormat(data) 
@@ -83,17 +135,16 @@ Page({
     },
     airDataFormat(data) {
         // let swiperTrip = Math.ceil(data.length / 4)
-        // console.log(swiperTrip)
         // let grap = 4
         // let list=[]
-        // swiperTrip.forEach((item,i)=>{
-        //     list.push(data.slice(i*grap , (i+1)*grap))
-        //     return list
+        // data.forEach((item,i)=>{
+        //     item['upde_time'] = item.pub_time.slice(10).replace('/','-')
+        //     return data
         // })
         // for(let i=0;i<swiperTrip;i++) {
         //   list.push(data.slice(i*grap , (i+1)*grap))
         // }   
-        // console.log(list) 
+        // console.log(list +'list') 
         // this.setData({
         //   airStationList:list,
         //   swiperList:swiperTrip
@@ -118,18 +169,18 @@ Page({
     // 格式数据
     formatLifeStyle(data) {
         const lifeIcon = config.lifestyleImgList
-        let lifestyle = data.reduce((prev,next) => {
-            prev.push({
-                brf:next.brf,
-                txt:next.txt,
-                iconTxt:lifeIcon[next.type].txt,
-                iconUrl:lifeIcon[next.type].src
-            })
-            return prev
-        },[])
-        this.setData({
-            lifeStyleList:lifestyle
-        })
+        // let lifestyle = data.reduce((prev,next) => {
+        //     prev.push({
+        //         brf:next.brf,
+        //         txt:next.txt,
+        //         iconTxt:lifeIcon[next.type].txt,
+        //         iconUrl:lifeIcon[next.type].src
+        //     })
+        //     return prev
+        // },[])
+        // this.setData({
+        //     lifeStyleList:lifestyle
+        // })
 
     },
     getFutureInfo() {
@@ -146,16 +197,17 @@ Page({
         })
     },
     fatureFormat(data) {
-        let days = ['今天','明天','后天']
-        console.log(data)
-        data.forEach((item,index) => {
-            item['day_name'] = days[index]
-            item['date']= item.date.slice(5).replace('-','/')
-            return data
-        })
-        this.setData({
-            futureList:data
-        })
+        // let days = ['今天','明天','后天']
+        // data.forEach((item,index) => {
+        //     item['day_name'] = days[index]
+        //     item['date']= item.date.slice(5).replace('-','/')
+        //     item['iconUrld'] = `${BASE_ICON}/${item.cond_code_d}.png`
+        //     item['iconUrln'] = `${BASE_ICON}/${item.cond_code_n}.png`
+        //     return data
+        // })
+        // this.setData({
+        //     futureList:data
+        // })
     }
 
 })

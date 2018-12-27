@@ -29,6 +29,23 @@ const getLocation =() => {
         })
     })
 }
+//通过经纬度获取城市
+const getCityByLon = (option)=> {
+    return new Promise((resolve,reject) => {
+        QQMap.reverseGeocoder({
+            location:{
+                latitude:option.latitude,
+                longitude:option.longitude
+            },
+            success(res) {
+                resolve(res.result)
+            },
+            fail(error) {
+                reject(error)
+            }
+        })
+    })
+}
 //实时天气
  const getNowWeather =(option) => {
      return new Promise((resolve, reject) => {
@@ -115,5 +132,6 @@ module.exports = {
     getNowWeather,
     getNowAir,
     getLifeStyleWeather,
-    getFutureWeather
+    getFutureWeather,
+    getCityByLon
 }
