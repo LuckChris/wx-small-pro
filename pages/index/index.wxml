@@ -18,7 +18,7 @@
       <!-- 定位天气 -->
       <view class="weather-message">
         <view class="address-info" bindTap="toToLocation">
-          <text class="address">{{location}}</text>
+          <text class="address">深圳</text>
           <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
         </view>
       </view>  
@@ -49,9 +49,9 @@
   <view class="three-hours-container">
     <text class="three-hours-title">附近站点空气质量实况</text>
     <swiper class="hours-list" indicator-dots="{{indicatorDots}}"  indicator-active-color="{{indicatorActiveColor}}">
-      <block wx:for="{{airStationList}}" wx:for-item="tripItem">
+      <block wx:for="{{airStationList}}" wx:for-item="tripItem" wx:key="index">
         <swiper-item class="hours-swiper-item">
-          <block  wx:for="{{tripItem}}">
+          <block  wx:for="{{tripItem}}" wx:key="index">
             <view class="hours-item">
               <view>{{item.air_sta}}</view>
               <!-- <view>发布时间：{{item.upde_time}}</view> -->

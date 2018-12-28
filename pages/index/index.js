@@ -30,13 +30,16 @@ Page({
         lon:''
     },
     onShow() {
-        this.init()     
+        // this.init()         
     },
+    // onLoad() {
+    //     this.toToLocation()
+    // },
     toToLocation() {
+        console.log('22222')
         wx.navigateTo({
-            url:'pages/search/search'
+            url:`/pages/search/search`
         })
-
     },
     //初始化
    async init() {
@@ -94,120 +97,98 @@ Page({
           console.log(error)          
       }
     },
-    getNowWeatherHandler() {
-        console.log(this.data.location + '城市')
-        return new Promise((resolve,reject) => {
-            api.getNowWeather({
-                location :this.data.location 
-            }).then((res) => {
-                let data = res.HeWeather6[0] 
-                if(data) {
-                    // let code = data.now.cond_code || '101'
-                    let code = 101
-                    this.initBgImg(code)  
-                }            
-                // this.setData({
-                //     currentCity:data.basic.location,
-                //     nowData : data.now,
-                //     upDataTime:data.update.loc.slice(5).replace(/-/, '/'),
-                //     iconUrl :`${BASE_ICON}/${data.now.cond_code}.png`
-                // })   
-                resolve() 
-            }).catch((err) => {
-                reject(err)
-            })
-        })
-        
+   async getNowWeatherHandler() {
+       try {
+         let res = await  api.getNowWeather({location:'深圳' })
+         if(res) {
+            let data = res.HeWeather6[0] 
+            let code = data.now.cond_code
+            this.initBgImg(code) 
+            this.setData({
+                currentCity:data.basic.location,
+                nowData : data.now,
+                upDataTime:data.update.loc.slice(5).replace(/-/, '/'),
+                iconUrl :`${BASE_ICON}/${data.now.cond_code}.png`
+            })   
+         }           
+       } catch (error) {
+           console.log(error)          
+       }          
     },
-    getNowAirInfo() {
-      return new Promise((resolve,reject) => {
-        api.getNowAir({
-          location : '昆明'
-        }).then((res)=> {
-            let data = res.HeWeather6[0].air_now_station
-            this.airDataFormat(data) 
-        resolve()
-
-        }).catch((err) => {
-            reject(err)
-        })
-      })
+   async  getNowAirInfo() {
+       try {
+           let res = await api.getNowAir({location:'深圳'})
+           let data = res && res.HeWeather6[0].air_now_station
+           this.airDataFormat(data) 
+           
+       } catch (error) {
+           console.log(error)           
+       }
     },
     airDataFormat(data) {
-        // let swiperTrip = Math.ceil(data.length / 4)
-        // let grap = 4
-        // let list=[]
-        // data.forEach((item,i)=>{
-        //     item['upde_time'] = item.pub_time.slice(10).replace('/','-')
-        //     return data
-        // })
-        // for(let i=0;i<swiperTrip;i++) {
-        //   list.push(data.slice(i*grap , (i+1)*grap))
-        // }   
-        // console.log(list +'list') 
-        // this.setData({
-        //   airStationList:list,
-        //   swiperList:swiperTrip
-        // })
-
-
-    },
-    getlifeStyleInfo() {
-        return new Promise((resolve,reject) => {
-            api.getLifeStyleWeather({
-                location : '深圳'               
-            }).then((res) => {
-                let data = res.HeWeather6[0].lifestyle
-                this.formatLifeStyle(data)
-                resolve()
-            }).catch((err) => {
-                reject(err)
-            })
+        let swiperTrip = Math.ceil(data.length / 4)
+        let grap = 4
+        let list=[]
+        data.forEach((item,i)=>{
+            item['upde_time'] = item.pub_time.slice(10).replace('/','-')
+            return data
+        })
+        for(let i=0;i<swiperTrip;i++) {
+          list.push(data.slice(i*grap , (i+1)*grap))
+        }   
+        this.setData({
+          airStationList:list,
+          swiperList:swiperTrip
         })
     },
-
+   async getlifeStyleInfo() {
+       try {
+           let res = await api.getLifeStyleWeather({location : '深圳'})
+           if(res) {
+            let data = res.HeWeather6[0].lifestyle
+            this.formatLifeStyle(data)
+           }         
+       } catch (error) {
+           console.log(error)          
+       }
+    },
     // 格式数据
     formatLifeStyle(data) {
         const lifeIcon = config.lifestyleImgList
-        // let lifestyle = data.reduce((prev,next) => {
-        //     prev.push({
-        //         brf:next.brf,
-        //         txt:next.txt,
-        //         iconTxt:lifeIcon[next.type].txt,
-        //         iconUrl:lifeIcon[next.type].src
-        //     })
-        //     return prev
-        // },[])
-        // this.setData({
-        //     lifeStyleList:lifestyle
-        // })
-
-    },
-    getFutureInfo() {
-        return new Promise((resolve,reject) => {
-            api.getFutureWeather({
-                location:'深圳'
-            }).then((res) => {
-                let data = res.HeWeather6[0].daily_forecast
-                this.fatureFormat(data)
-                resolve()
-            }).catch((err) => {
-                reject(err)
+        let lifestyle = data.reduce((prev,next) => {
+            prev.push({
+                brf:next.brf,
+                txt:next.txt,
+                iconTxt:lifeIcon[next.type].txt,
+                iconUrl:lifeIcon[next.type].src
             })
+            return prev
+        },[])
+        this.setData({
+            lifeStyleList:lifestyle
         })
     },
+   async getFutureInfo() {
+       try {
+           let res = await  api.getFutureWeather({location:'深圳'})
+           let data = res && res.HeWeather6[0].daily_forecast
+           this.fatureFormat(data)         
+       } catch (error) {
+           console.log(error)
+       }
+    },
     fatureFormat(data) {
-        // let days = ['今天','明天','后天']
-        // data.forEach((item,index) => {
-        //     item['day_name'] = days[index]
-        //     item['date']= item.date.slice(5).replace('-','/')
-        //     item['iconUrld'] = `${BASE_ICON}/${item.cond_code_d}.png`
-        //     item['iconUrln'] = `${BASE_ICON}/${item.cond_code_n}.png`
-        //     return data
-        // })
-        // this.setData({
-        //     futureList:data
-        // })
+        let days = ['今天','明天','后天']
+        data.forEach((item,index) => {
+            item['day_name'] = days[index]
+            item['date']= item.date.slice(5).replace('-','/')
+            item['iconUrld'] = `${BASE_ICON}/${item.cond_code_d}.png`
+            item['iconUrln'] = `${BASE_ICON}/${item.cond_code_n}.png`
+            return data
+        })
+        this.setData({
+            futureList:data
+        })
     }
 
 })
