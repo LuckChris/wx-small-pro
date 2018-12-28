@@ -17,7 +17,7 @@
     <view class="container">
       <!-- 定位天气 -->
       <view class="weather-message">
-        <view class="address-info" bindTap="toToLocation">
+        <view class="address-info" bindtap="toToLocation">
           <text class="address">深圳</text>
           <image src='{{imgUrl}}' class="address-icon"  mode="widthFix"/>  
         </view>
