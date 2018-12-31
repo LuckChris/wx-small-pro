@@ -44,8 +44,11 @@ Page({
     //初始化
    async init() {
         await this.initGreetings()
-        await this.getLcationCity()
-        await this.initWeather()     
+      let res=  await this.getLcationCity()
+      console.log(res + 'sssss')
+      if(res) {
+        await this.initWeather()
+      }
     },
 
     // 初始化问候语
@@ -79,7 +82,7 @@ Page({
                 lat:latitude,
                 lon:longitude
             })
-            this.getCity({
+           return this.getCity({
                 latitude,
                 longitude
             })               
@@ -92,14 +95,16 @@ Page({
            let res = await api.getCityByLon(option)
            this.setData({
                location:res.ad_info.city
-           })         
+           })
+           return res.ad_info.city
       } catch (error) {
           console.log(error)          
       }
     },
    async getNowWeatherHandler() {
        try {
-         let res = await  api.getNowWeather({location:'深圳' })
+        console.log(this.data.location + 'locatioin')
+         let res = await  api.getNowWeather({location:this.data.location })
          if(res) {
             let data = res.HeWeather6[0] 
             let code = data.now.cond_code
@@ -117,7 +122,7 @@ Page({
     },
    async  getNowAirInfo() {
        try {
-           let res = await api.getNowAir({location:'深圳'})
+           let res = await api.getNowAir({location:this.data.location})
            let data = res && res.HeWeather6[0].air_now_station
            this.airDataFormat(data) 
            
@@ -143,7 +148,7 @@ Page({
     },
    async getlifeStyleInfo() {
        try {
-           let res = await api.getLifeStyleWeather({location : '深圳'})
+           let res = await api.getLifeStyleWeather({location : this.data.location})
            if(res) {
             let data = res.HeWeather6[0].lifestyle
             this.formatLifeStyle(data)
@@ -170,7 +175,7 @@ Page({
     },
    async getFutureInfo() {
        try {
-           let res = await  api.getFutureWeather({location:'深圳'})
+           let res = await  api.getFutureWeather({location:this.data.location})
            let data = res && res.HeWeather6[0].daily_forecast
            this.fatureFormat(data)         
        } catch (error) {

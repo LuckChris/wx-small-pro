@@ -10,10 +10,10 @@
     <view class="guess-city">
         <button size="mini" type="primary" plain="true"  wx:for="{{filterName}}">{{item}}</button>
     </view>
-    <view class="all-city-list" wx:for="{{filterName}}">
-        <view class="letter">A</view>
-        <view class="city" wx:for="{{filterName}}">
-            <view>深圳市</view>
+    <view class="all-city-list" wx:for="{{allcityList}}">
+        <view class="letter" >{{index}}</view>
+        <view class="city" wx:for="{{item}}">
+            <view>{{item.fullname}}</view>
         </view>
     </view>
     <view class="letter-gudience">
