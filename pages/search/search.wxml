@@ -1,23 +1,27 @@
 <view class='search-container'>
 <!-- 头部搜索 -->
     <view class="search-input">
-        <input placeholder="请输入城市关键字搜索" />
-        <text class="cancel">取消</text>       
+        <input placeholder="请输入城市关键字搜索" value="{{inputValue}}" bindfocus="focus"  bindinput="inputHandler" />
+        <text class="cancel" bindtap='cancelHandler'>取消</text>       
     </view>
-    <view class="guess-find">
-        <text>#猜你想找</text>
-    </view>
-    <view class="guess-city">
-        <button size="mini" type="primary" plain="true"  wx:for="{{filterName}}">{{item}}</button>
-    </view>
-    <view class="all-city-list" wx:for="{{allcityList}}">
-        <view class="letter" >{{index}}</view>
-        <view class="city" wx:for="{{item}}">
-            <view>{{item.fullname}}</view>
+    <scroll-view scroll-y ="{{true}}" class="city-list" scroll-with-animation = "{{true}}" scroll-into-view="{{scrollIntoView}}">
+        <view class="guess-find">
+            <text>#猜你想找</text>
+        </view> 
+        <view class="guess-city">
+            <button size="mini" type="primary" plain="true"  wx:for="{{filterName}}" wx:key="{{index}}">{{item}}</button>
         </view>
-    </view>
-    <view class="letter-gudience">
-        <text>#</text>
-        <text wx:for="{{filterName}}">A</text>
-    </view>
+        <view class="all-city-list" wx:for="{{allcityList}}" wx:key="{{index}}">
+            <view class="letter" id="{{'title_' + index}}">{{index}}</view>
+            <view class="city" wx:for="{{item}}" wx:key="{{index}}">
+                <view bindtap='chooseCity' data-set = "{{item}}">{{item.fullname}}</view>
+            </view>
+        </view>
+     </scroll-view>    
+        <!-- 字母索引 -->
+        <view class="letter-gudience">
+            <text wx:for="{{allcityList}}" class="{{(barIndex === index) ? 'active-letter' : ''}}" wx:key="{{index}}" bindtap="tapIndexItem" data-item="{{index}}">{{index}}</text>
+        </view>
+    <view class="mask-panel" wx:if="{{showMask}}"></view>    
+   
 </view>

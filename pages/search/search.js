@@ -5,10 +5,14 @@ const regeneratorRuntime = require('../../lib/regenerator')
 Page({
   data: {
     filterName: ['北京市', '上海市', '广州市', '深圳市', '武汉市', '南京市'],
-    allcityList: ''
+    allcityList: '',
+    scrollIntoView:'title_0',
+    barIndex:'A',
+    inputValue:'',
+    showMask:false
   },
 
-  onShow() {
+  onLoad() {
     const value = wx.getStorageSync('cityList')
     if (value) {
       this.setData({
@@ -37,8 +41,7 @@ Page({
           }
         })
         util.delEmptyObj(sortObj)
-        console.log('sortObj', sortObj)
-        // wx.setStorageSync('cityList', sortObj)
+        wx.setStorageSync('cityList', sortObj)
         this.setData({
           allcityList: sortObj
         })
@@ -46,5 +49,42 @@ Page({
     } catch (error) {
       console.log(error)
     }
+  },
+  tapIndexItem(event) {
+    let id = event.currentTarget.dataset.item
+    this.setData({
+      scrollIntoView:`title_${id}`
+    })
+    //设置索引焦点
+    setTimeout(() => {
+      this.setData({
+        barIndex : id
+      })
+    },300)
+  },
+  chooseCity(e) {
+    let cityname =  e.currentTarget.dataset.set.fullname
+    // wx.setStorageSync('city', cityname)
+    if(cityname) {
+      wx.navigateTo({
+        url:`/pages/index/index?city=${cityname}`
+    })
+    }
+  },
+  cancelHandler() {
+    this.setData({
+      inputValue : '',
+      showMask : false
+    })
+
+  },
+  inputHandler(e) {
+
+  },
+  focus() {
+    this.setData ( {
+      showMask : true
+    })
+
   }
 })

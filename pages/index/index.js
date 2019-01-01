@@ -11,7 +11,6 @@
 Page({
     data: {
         imgUrl: "../image/location_s_w.png" ,
-        trip:[1,2,3,4],
         greets:'' ,
         nowData:'',
         upDataTime:'',
@@ -27,16 +26,25 @@ Page({
         iconUrl:`${BASE_ICON}/999.png`,
         location:'',
         lat:'',
-        lon:''
+        lon:'',
+        chooseCity:''
     },
-    onShow() {
-        // this.init()         
+   async onLoad(options) {  
+        if(options.city) {
+           this.setData({
+            location : options.city
+           }) 
+        } else {
+           let res = await this.getLcationCity()
+           this.setData({
+               location: res
+           })
+        }
+        if(this.data.location || options.city) {
+            this.init()
+        }
     },
-    // onLoad() {
-    //     this.toToLocation()
-    // },
     toToLocation() {
-        console.log('22222')
         wx.navigateTo({
             url:`/pages/search/search`
         })
@@ -44,11 +52,7 @@ Page({
     //初始化
    async init() {
         await this.initGreetings()
-      let res=  await this.getLcationCity()
-      console.log(res + 'sssss')
-      if(res) {
-        await this.initWeather()
-      }
+        // await this.initWeather()  
     },
 
     // 初始化问候语
@@ -93,17 +97,23 @@ Page({
   async  getCity(option) {
       try {
            let res = await api.getCityByLon(option)
-           this.setData({
-               location:res.ad_info.city
-           })
-           return res.ad_info.city
+           let city =  res.ad_info.city
+           if(this.data.chooseCity) {
+               this.setData({
+                   location : this.data.chooseCity
+               })
+           } else {
+                this.setData({
+                    location:city
+                })
+           }        
+           return city
       } catch (error) {
           console.log(error)          
       }
     },
    async getNowWeatherHandler() {
        try {
-        console.log(this.data.location + 'locatioin')
          let res = await  api.getNowWeather({location:this.data.location })
          if(res) {
             let data = res.HeWeather6[0] 

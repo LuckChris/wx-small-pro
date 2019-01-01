@@ -21,6 +21,9 @@
 .cancel{
     color: #1aad16;
 }
+.city-list{
+    height: calc(100vh - 92rpx);
+}
 .guess-find{
    background-color: #eee;
    padding:10rpx  20rpx;
@@ -55,14 +58,27 @@
     border-bottom: 1rpx solid #eee;
 }
 .letter-gudience{
-    position: absolute;
-    top: 100rpx;
+    position: fixed;
+    top: 250rpx;
     right: 0;
     padding: 5rpx 8rpx;
     background-color: rgba(0,0,0,.3);
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .letter-gudience text{
     color: #333;
+}
+.letter-gudience .active-letter{
+    color: #1aad16;
+
+}
+.mask-panel{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 100rpx;
+    background: rgba(0,0,0,.3)
 }
