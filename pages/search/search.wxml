@@ -9,7 +9,7 @@
             <text>#猜你想找</text>
         </view> 
         <view class="guess-city">
-            <button size="mini" type="primary" plain="true"  wx:for="{{filterName}}" wx:key="{{index}}">{{item}}</button>
+            <button size="mini" type="primary" plain="true"  wx:for="{{filterName}}" wx:key="{{index}}" data-set="{{item}}" bindtap='chooseHotCity'>{{item}}</button>
         </view>
         <view class="all-city-list" wx:for="{{allcityList}}" wx:key="{{index}}">
             <view class="letter" id="{{'title_' + index}}">{{index}}</view>
@@ -22,6 +22,12 @@
         <view class="letter-gudience">
             <text wx:for="{{allcityList}}" class="{{(barIndex === index) ? 'active-letter' : ''}}" wx:key="{{index}}" bindtap="tapIndexItem" data-item="{{index}}">{{index}}</text>
         </view>
-    <view class="mask-panel" wx:if="{{showMask}}"></view>    
+        <!-- 搜索显示内容 -->
+    <view class="mask-panel {{showStyle ? 'white-bg':'opacity-bg'}}" wx:if="{{showMask}}">
+        <view class="keyword-list" wx:for="{{keywordList}}" bindtap='chooseAddress' data-set='{{item}}' wx:key="{{index}}">
+            <view class="title">{{item.title}}</view>
+            <view class="address">{{item.address}}</view>
+        </view>
+    </view>    
    
 </view>

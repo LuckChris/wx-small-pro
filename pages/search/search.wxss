@@ -34,13 +34,18 @@
     justify-content: space-around;
     flex-wrap: wrap;
     align-items: center;
+    padding: 0 45rpx 0 10rpx;
 }
-.guess-city button:nth-child(5){
+.guess-city button{
+    margin-right: 10rpx;
+    margin-bottom: 15rpx;
+}
+/* .guess-city button:nth-child(5){
     margin-top: 20rpx;
 }
 .guess-city button:nth-child(6){
     margin-top: 20rpx;
-}
+} */
 .all-city-list{
     padding-top: 15rpx;
    
@@ -59,9 +64,9 @@
 }
 .letter-gudience{
     position: fixed;
-    top: 250rpx;
+    top: 180rpx;
     right: 0;
-    padding: 5rpx 8rpx;
+    padding: 15rpx 10rpx;
     background-color: rgba(0,0,0,.3);
     display: flex;
     flex-direction: column;
@@ -80,5 +85,24 @@
     position: absolute;
     left: 0;
     top: 100rpx;
+   
+}
+.white-bg{
+    background-color: #fff;
+}
+.opacity-bg{
     background: rgba(0,0,0,.3)
+
+}
+.keyword-list{
+    padding: 10rpx 20rpx;
+    border-bottom: 1rpx solid #eee;
+}
+.keyword-list .title{
+    font-size: 28rpx;
+    padding-bottom: 5rpx;
+}
+.keyword-list .address {
+    font-size: 24rpx;
+    color: #999;
 }

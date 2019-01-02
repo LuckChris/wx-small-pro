@@ -4,12 +4,14 @@ const util = app.globalData.utils
 const regeneratorRuntime = require('../../lib/regenerator')
 Page({
   data: {
-    filterName: ['北京市', '上海市', '广州市', '深圳市', '武汉市', '南京市'],
+    filterName: ['北京市', '上海市', '广州市', '深圳市', '武汉市', '南京市', '昆明市'],
     allcityList: '',
     scrollIntoView:'title_0',
     barIndex:'A',
     inputValue:'',
-    showMask:false
+    showMask:false,
+    keywordList:'',
+    showStyle:false
   },
 
   onLoad() {
@@ -24,6 +26,10 @@ Page({
   },
   async getCityList() {
     try {
+      wx.showToast({
+        title:'数据加载中~~',
+        duration: 2000
+      })
       let res = await api.getAllCityList()
       let sortObj = {}
       for (let i = 65; i <= 90; i++) {
@@ -79,12 +85,37 @@ Page({
 
   },
   inputHandler(e) {
-
+    setTimeout(() => {
+    api.getKeywordsList({keyword:e.detail.value}).then(res=> {
+      this.setData({
+        keywordList : res.data,
+        showStyle:true
+      })
+      })   
+    },300)
   },
   focus() {
     this.setData ( {
       showMask : true
     })
+  },
+  chooseAddress(e) {
+    console.log(e)
+    let {title,location} = e.currentTarget.dataset.set
+    console.log(title,location)
+    if(title) {
+      wx.navigateTo({
+        url:`/pages/index/index?city=${title}&lat=${location.lat}&lng=${location.lng}`
+    })
+    }
+  },
+  chooseHotCity(e) {
+    let addressname = e.currentTarget.dataset.set
+    if(addressname) {
+      wx.navigateTo({
+        url:`/pages/index/index?city=${addressname}`
+    })
+    }
 
   }
 })

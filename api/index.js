@@ -61,6 +61,21 @@ const getAllCityList = () => {
   })
 }
 
+// 输入关键字获取内容
+const getKeywordsList =(keyword) => {
+  return new Promise((resolve,reject) => {
+    QQMap.getSuggestion({
+      keyword,
+      success(res) {
+        resolve(res)
+      },
+      fail(error) {
+        reject(error)
+      }
+    })
+  })
+
+} 
 //实时天气
 const getNowWeather = (option) => {
   return new Promise((resolve, reject) => {
@@ -149,5 +164,6 @@ module.exports = {
   getLifeStyleWeather,
   getFutureWeather,
   getCityByLon,
-  getAllCityList
+  getAllCityList,
+  getKeywordsList
 }

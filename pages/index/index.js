@@ -31,9 +31,16 @@ Page({
     },
    async onLoad(options) {  
         if(options.city) {
-           this.setData({
+            this.setData({
             location : options.city
-           }) 
+            }) 
+            if(options.lng && options.lat){
+             let res = await this.getCity({
+                    latitude:options.lat,
+                    longitude:options.lng
+                })
+                console.log(res) 
+            }
         } else {
            let res = await this.getLcationCity()
            this.setData({
@@ -42,7 +49,7 @@ Page({
         }
         if(this.data.location || options.city) {
             this.init()
-        }
+        }     
     },
     toToLocation() {
         wx.navigateTo({
@@ -91,29 +98,47 @@ Page({
                 longitude
             })               
        } catch (error) {
+        wx.showModal({
+            title: '提示',
+            content: '请允许微信获取位置权限才能定位哦',
+            confirmText:'去设置',
+            success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
            console.log(error)           
        }
     },
   async  getCity(option) {
       try {
-           let res = await api.getCityByLon(option)
-           let city =  res.ad_info.city
-           if(this.data.chooseCity) {
-               this.setData({
-                   location : this.data.chooseCity
-               })
-           } else {
-                this.setData({
-                    location:city
-                })
-           }        
-           return city
+        wx.showToast({
+            title:'数据加载中~~',
+            icon:'none',
+            duration: 2000
+        })
+        let res = await api.getCityByLon(option)
+        let city =  res.ad_info.city
+        if(this.data.chooseCity) {
+            this.setData({
+                location : this.data.chooseCity
+            })
+        } else {
+            this.setData({
+                location:city
+            })
+        }        
+        return city
       } catch (error) {
           console.log(error)          
       }
     },
    async getNowWeatherHandler() {
        try {
+           console.log(this.data.location)
          let res = await  api.getNowWeather({location:this.data.location })
          if(res) {
             let data = res.HeWeather6[0] 
