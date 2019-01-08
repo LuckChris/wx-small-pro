@@ -76,6 +76,26 @@ const getKeywordsList =(keyword) => {
   })
 
 } 
+//获取三小时天气
+const getHourly=(option) => {
+  return new Promise((resolve,reject) => {
+    wx.request({
+      url:config.hourlyUrl,
+      method:'GET',
+      data:{
+        ...commonParam,
+        ...option
+      },
+      success(res) {
+        resolve(res)
+      },
+      fail(err) {
+        reject(err)
+      }
+    })
+  })
+
+}
 //实时天气
 const getNowWeather = (option) => {
   return new Promise((resolve, reject) => {
@@ -165,5 +185,6 @@ module.exports = {
   getFutureWeather,
   getCityByLon,
   getAllCityList,
-  getKeywordsList
+  getKeywordsList,
+  getHourly
 }

@@ -14,6 +14,10 @@ module.exports = {
     // 空气质量状况
     nowAirUrl:`${AIR_API}/now`,
 
+    // 隔三小时天气
+    hourlyUrl:`${HEWEATHER_API}/hourly`,
+
+
     // 生活指数
     lifestyleUrl:`${HEWEATHER_API}/lifestyle`,
 

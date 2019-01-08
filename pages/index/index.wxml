@@ -47,22 +47,21 @@
   </view>
   <!-- 空气质量实况 -->
   <view class="three-hours-container">
-    <text class="three-hours-title">附近站点空气质量实况</text>
+    <text class="three-hours-title">隔三小时天气情况</text>
     <swiper class="hours-list" indicator-dots="{{indicatorDots}}"  indicator-active-color="{{indicatorActiveColor}}">
       <block wx:for="{{airStationList}}" wx:for-item="tripItem" wx:key="index">
         <swiper-item class="hours-swiper-item">
           <block  wx:for="{{tripItem}}" wx:key="index">
             <view class="hours-item">
-              <view>{{item.air_sta}}</view>
-              <!-- <view>发布时间：{{item.upde_time}}</view> -->
+              <view>{{item.tmp}}℃</view>
+              <view>{{item.time}}</view>
               <!-- <view>
                 <image class="status-icon" src='{{imgUrl}}' ></image>
               </view> -->
-              <view>{{item.qlty}}</view>
-              <view>空气指数{{item.aqi}}</view>           
-              <view>pm25:{{item.pm25}}</view>
-              <view> pm10:{{item.pm10}}</view>
-              <view>co  : {{item.co}}</view>
+              <view>{{item.wind_dir}}</view>
+              <view>{{item.wind_sc}}</view>           
+              <view>降水率{{item.pop}}</view>
+              <view>湿度{{item.hum}}</view>
             </view>
           </block>
         </swiper-item>

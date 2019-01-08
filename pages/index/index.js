@@ -59,7 +59,7 @@ Page({
     //初始化
    async init() {
         await this.initGreetings()
-        // await this.initWeather()  
+        await this.initWeather()  
     },
 
     // 初始化问候语
@@ -70,10 +70,10 @@ Page({
     },
     // 初始化天气
     initWeather() {
-      this.getNowWeatherHandler()
-      this.getNowAirInfo()
-      this.getlifeStyleInfo()
-      this.getFutureInfo()
+        this.getHourlyWeather()
+        this.getNowWeatherHandler()
+        this.getlifeStyleInfo()
+        this.getFutureInfo()
 
     },
     initBgImg(code) {
@@ -155,22 +155,33 @@ Page({
            console.log(error)          
        }          
     },
-   async  getNowAirInfo() {
-       try {
-           let res = await api.getNowAir({location:this.data.location})
-           let data = res && res.HeWeather6[0].air_now_station
-           this.airDataFormat(data) 
-           
-       } catch (error) {
-           console.log(error)           
-       }
+    async getHourlyWeather() {
+        try {
+            let res = await api.getHourly({location:this.data.location})
+            let data = res.data.HeWeather6[0].hourly
+            console.log(data + '数据')
+            this.airDataFormat(data)            
+        } catch (error) {
+            console.log(error)            
+        }
+
     },
+//    async  getNowAirInfo() {
+//        try {
+//            let res = await api.getNowAir({location:this.data.location})
+//            let data = res && res.HeWeather6[0].air_now_station
+//            this.airDataFormat(data) 
+           
+//        } catch (error) {
+//            console.log(error)           
+//        }
+//     },
     airDataFormat(data) {
         let swiperTrip = Math.ceil(data.length / 4)
         let grap = 4
         let list=[]
         data.forEach((item,i)=>{
-            item['upde_time'] = item.pub_time.slice(10).replace('/','-')
+            item['time'] = item.time.slice(10)
             return data
         })
         for(let i=0;i<swiperTrip;i++) {
@@ -211,7 +222,7 @@ Page({
    async getFutureInfo() {
        try {
            let res = await  api.getFutureWeather({location:this.data.location})
-           let data = res && res.HeWeather6[0].daily_forecast
+           let data = res && res.HeWeather6[0].daily_forecast.slice(0,3)
            this.fatureFormat(data)         
        } catch (error) {
            console.log(error)
