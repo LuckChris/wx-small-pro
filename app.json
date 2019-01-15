@@ -9,5 +9,11 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "天气查询",
     "navigationBarTextStyle":"black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息用于查询当地天气"
+    }
   }
+
 }
