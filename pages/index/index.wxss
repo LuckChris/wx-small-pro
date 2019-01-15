@@ -1,19 +1,21 @@
-.bg-img{
-    width: 100%;
-    height: 100vh;
-    /* background-color: rgba(0,0,0,0.2); */
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
+
+.nodate{
+    padding: 30rpx;
+    box-sizing: border-box;
+    font-size: 32rpx;
+    color: #333;
+    background-color: bisque;
+    min-height: 100vh;
+    padding-top: 300rpx;
+    text-align: center;
 }
 .container-wrapper{
+    width: 100%;
+   min-height: 100vh;
     font-size: 32rpx;
     color: #fff;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .user-info{
@@ -26,6 +28,7 @@
     /* margin-top: 40rpx; */
     font-size: 36rpx;
     transition: all 300ms ease;
+    box-sizing: border-box;
 }
 .avatar-img{
     width: 60rpx;
@@ -96,6 +99,7 @@
     margin-right: 20rpx;
 }
 .three-hours-container{
+    width: 100%;
     background-color: rgba(0,0,0,0.4);
     text-align: center;
 }
@@ -125,6 +129,7 @@
 }
 .thress-days-contanier,
 .life-number-container{
+    width: 100%;
     background-color: rgba(0,0,0,0.4);
     text-align: center;
     margin-top: 30rpx;
@@ -144,11 +149,13 @@
     justify-content: flex-start;
     align-items: center;
     padding-top: 20rpx;
+    box-sizing: border-box;
 }
 .life-right{
     font-size: 28rpx;
     text-align: left;
     padding-left: 10rpx;
+    box-sizing: border-box;
 }
 .life-right > view{
     margin-bottom: 10rpx;
@@ -156,6 +163,7 @@
 .life-number-container{
     border-bottom: 1rpx solid #ccc;
     padding: 0 10rpx;
+    box-sizing: border-box;
 }
 .copy-right{
     display: flex;

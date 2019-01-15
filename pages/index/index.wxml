@@ -1,9 +1,11 @@
   <!-- 背景 -->
-  <view class="bg-img" style="background-image:url({{bgImgUrl}})"></view>
-
+  <view class="nodate" wx:if="{{showNoDate}}">
+    <view>您没有允许获取位置，</view>
+    <view>所以无法查询天气哦~~</view>
+  </view>
   <!-- 内容部分 -->
-<view class="container-wrapper">
-    
+<view class="container-wrapper" wx:else style="background-image:url({{bgImgUrl}})">
+   
       <!-- 用户信息 -->
     <view class="user-info">
       <view class="avatar-img">

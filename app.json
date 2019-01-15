@@ -7,7 +7,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "LuckChris",
+    "navigationBarTitleText": "天气查询",
     "navigationBarTextStyle":"black"
   }
 }

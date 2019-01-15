@@ -27,7 +27,8 @@ Page({
         location:'',
         lat:'',
         lon:'',
-        chooseCity:''
+        chooseCity:'',
+        showNoDate:false
     },
    async onLoad(options) {  
         if(options.city) {
@@ -98,19 +99,21 @@ Page({
                 longitude
             })               
        } catch (error) {
-        wx.showModal({
-            title: '提示',
-            content: '请允许微信获取位置权限才能定位哦',
-            confirmText:'去设置',
-            success(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-           console.log(error)           
+           this.setData({
+            showNoDate:true
+           })
+            wx.showModal({
+                title: '提示',
+                content: '请允许微信获取位置权限才能定位哦',
+                confirmText:'去设置',
+                success(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+                }
+            })          
        }
     },
   async  getCity(option) {
