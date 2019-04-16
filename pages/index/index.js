@@ -57,7 +57,9 @@ Page({
             url:`/pages/search/search`
         })
     },
+    onShareAppMessage(res) {},
     //初始化
+
    async init() {
         await this.initGreetings()
         await this.initWeather()  
